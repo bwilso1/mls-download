@@ -11,10 +11,40 @@ def launch(url = None):
 	
 	else:
 		print("you need to type a url to start")
+		url =  "https://matrix.brightmls.com/Matrix/Public/PhotoPopup.aspx?tid=9&mtid=1&L=1&key=627224603&n=21&i=0&View=G"
 	
 	
 	
 def breakdown(element):
-	#https://matrix.brightmls.com/Matrix/Public/PhotoPopup.aspx?tid=9&mtid=1&L=1&key=627224603&n=21&i=0&View=G
-	print('not done')
-	#<a href="PhotoPopup.aspx?tid=9&amp;mtid=1&amp;L=1&amp;key=627224603&amp;n=21&amp;i=0&amp;View=Y"><img class="IV_Image" src="https://matrixmedia.brightmls.com/mediaserver/GetMedia.ashx?Key=627224603&amp;TableID=9&amp;Type=1&amp;Number=0&amp;Size=6&amp;exk=1c7d269cfbcb629e1378d7c0d12455f5"></a>
+	print('someting')
+	# https://matrix.brightmls.com/Matrix/Public/
+	# PhotoPopup.aspx?tid=9&mtid=1&L=1&key=627224603&n=21&i=0&View=Y
+	
+	# https://matrix.brightmls.com/Matrix/Public/PhotoPopup.aspx?tid=9&mtid=1&L=1&key=627224603&n=21&i=0&View=Y
+
+def generateLinks(base_url, limit):
+	for x in range(0,limit):
+		base_url % x
+		
+def getImageLink(url=None):
+	if url is None:
+		url = "https://matrix.brightmls.com/Matrix/Public/PhotoPopup.aspx?tid=9&mtid=1&L=1&key=627224603&n=21&i=0&View=Y"
+	page = requests.get(url)
+	soup = BeautifulSoup(page.text, 'html5lib')
+	imgs = soup.find_all('img', {'class' : 'IV_Image'})
+
+	return imgs[0]['src']
+		
+def savePhoto():
+	import urllib
+	f = open('00000001.jpg','wb')
+	f.write(urllib.urlopen('http://www.gunnerkrigg.com//comics/00000001.jpg').read())
+	f.close()
+	
+	import requests
+	f = open('00000001.jpg','wb')
+	f.write(requests.get('http://www.gunnerkrigg.com//comics/00000001.jpg').content)
+	f.close()
+	
+	# this works
+	# urllib.request.urlretrieve(getImageLink(), '1.jpg')
