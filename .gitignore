@@ -3,3 +3,5 @@
 /Scripts/
 pyvenv.cfg
 pip-selfcheck.json
+__pycache__/*
+*.jpg
